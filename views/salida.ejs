@@ -1,0 +1,68 @@
+<%- include("partials/header") %>
+<%- include("partials/navbar") %>
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+
+        <div class="card-header">
+            <h3>Registrar Salida</h3>
+        </div>
+
+        <div class="card-body">
+
+            <% if(error){ %>
+
+                <div class="alert alert-danger">
+                    <%= error %>
+                </div>
+
+            <% } %>
+
+            <% if(resultado){ %>
+
+                <div class="alert alert-success">
+
+                    <h5>Salida registrada correctamente</h5>
+
+                    <hr>
+
+                    <p><strong>Placa:</strong> <%= resultado.placa %></p>
+
+                    <p><strong>Tiempo:</strong> <%= resultado.minutos %> minutos</p>
+
+                    <p><strong>Total a pagar:</strong> $<%= resultado.total.toFixed(2) %></p>
+
+                </div>
+
+            <% } %>
+
+            <form action="/salida" method="POST">
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Placa
+                    </label>
+
+                    <input
+                        type="text"
+                        name="placa"
+                        class="form-control"
+                        required>
+
+                </div>
+
+                <button class="btn btn-success">
+                    Registrar Salida
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<%- include("partials/footer") %>

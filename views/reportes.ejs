@@ -1,0 +1,130 @@
+<%- include("partials/header") %>
+<%- include("partials/navbar") %>
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-dark text-white">
+            <h3 class="mb-0">📊 Reporte de Estancias</h3>
+        </div>
+
+        <div class="card-body">
+
+            <form action="/reportes" method="POST">
+
+                <div class="row">
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Fecha</label>
+                        <input
+                            type="date"
+                            class="form-control"
+                            name="fecha"
+                            value="<%= filtros.fecha %>"
+                            required>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Desde</label>
+                        <input
+                            type="time"
+                            class="form-control"
+                            name="horaInicio"
+                            value="<%= filtros.horaInicio %>"
+                            required>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Hasta</label>
+                        <input
+                            type="time"
+                            class="form-control"
+                            name="horaFin"
+                            value="<%= filtros.horaFin %>"
+                            required>
+                    </div>
+
+                    <div class="col-md-2 d-flex align-items-end mb-3">
+                        <button class="btn btn-primary w-100">
+                            Buscar
+                        </button>
+                    </div>
+
+                </div>
+
+            </form>
+
+            <hr>
+
+            <div class="table-responsive">
+
+                <table class="table table-striped table-hover">
+
+                    <thead class="table-dark">
+
+                        <tr>
+                            <th>Placa</th>
+                            <th>Tipo</th>
+                            <th>Entrada</th>
+                            <th>Salida</th>
+                            <th>Minutos</th>
+                            <th>Total</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <% if(reportes.length === 0){ %>
+
+                            <tr>
+
+                                <td colspan="6" class="text-center">
+                                    No hay registros para mostrar.
+                                </td>
+
+                            </tr>
+
+                        <% } %>
+
+                        <% reportes.forEach(r => { %>
+
+                            <tr>
+
+                                <td><%= r.placa %></td>
+
+                                <td><%= r.tipo %></td>
+
+                                <td><%= r.fechaEntrada %></td>
+
+                                <td><%= r.fechaSalida %></td>
+
+                                <td><%= r.minutos %></td>
+
+                                <td>$<%= Number(r.total_pagado).toFixed(2) %></td>
+
+                            </tr>
+
+                        <% }) %>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+    <a
+    href="/reportes/excel?fecha=<%= filtros.fecha %>&horaInicio=<%= filtros.horaInicio %>&horaFin=<%= filtros.horaFin %>"
+    class="btn btn-success mb-3">
+
+    Exportar a Excel
+
+</a>
+
+</div>
+
+<%- include("partials/footer") %>
